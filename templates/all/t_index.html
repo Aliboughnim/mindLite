@@ -1,0 +1,110 @@
+{% extends "base_teacher.html" %}
+
+{% block content %}
+{%load static%}
+
+   <!-- About Start -->
+   <div class="container-fluid py-5">
+    <div class="container">
+      
+      <div class="row align-items-center">
+        <div class="col-lg-5">
+          <img
+            class="img-fluid rounded mb-5 mb-lg-0"
+            src="{% static 'img/course_images/enterCourse.PNG' %}" 
+            alt=""
+          />
+        </div>
+        <div class="col-lg-7">
+        
+          <div class="contact-form">
+            <div class="card border-0">
+              <div class="card-header bg-secondary text-center p-4">
+                <h1 class="text-white m-0">Enter A New Course</h1>
+              </div>
+              <div class="card-body rounded-bottom bg-primary p-5">
+                <form name="sentMessage" id="create-course-form" novalidate="novalidate" action="{% url 'create_course'  classroom_id %}" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group">
+
+                    <input
+                      type="text"
+                      class="form-control border-0 p-4"
+                      id="title"
+                      name="title"  
+                      placeholder="Course Title"
+                      required="required"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="image"
+                      name="image"
+                      required="required"
+                    />
+                  </div>
+                  <div class="form-group">
+                      <textarea
+                      class="form-control"
+                      rows="6"
+                      id="text"
+                      name="text"
+                      placeholder="Course Text"
+                      required="required"
+                      data-validation-required-message="Please enter your message"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <button
+                      class="btn btn-secondary btn-block border-0 py-3"
+                      type="submit"
+                      id="sendMessageButton"
+                    >
+                     Submit 
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- About End -->
+
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        $(document).ready(function() {
+          $('#create-course-button').click(function() {
+            // Get the form data
+            var form_data = new FormData($('#create-course-form')[0]);
+      
+            // Make the AJAX request
+            $.ajax({
+              url: '{% url "create_course" classroom_id  %}',
+              type: 'post',
+              data: form_data,
+              processData: false,
+              contentType: false,
+              success: function(response) {
+                // Handle the response
+                console.log(response);
+              },
+              error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ': ' + xhr.responseText);
+              }
+            });
+      
+            return false; // Prevent the default form submission
+          });
+        });
+      </script>
+      
+
+{% endblock %}

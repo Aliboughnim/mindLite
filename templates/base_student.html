@@ -1,0 +1,283 @@
+{%load static%}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>MindLite{% block title%} 
+        {% endblock %} </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="Free HTML Templates" name="keywords" />
+    <meta content="Free HTML Templates" name="description" />
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Handlee&family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Flaticon Font -->
+    <link href="{% static 'lib/flaticon/font/flaticon.css' %}" rel="stylesheet" />
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Navbar Start -->
+    <div class="container-fluid bg-light position-relative shadow">
+      <nav
+        class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5"
+      >
+        <a
+          href=""
+          class="navbar-brand font-weight-bold text-secondary"
+          style="font-size: 50px"
+        >
+        <img src="{% static 'img/logoMind.png' %}" alt="MindLite logo" height="100"width="200">
+        <span class="text-primary">MindLite</span>
+        </a>
+        <button
+          type="button"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarCollapse"
+        >
+          <div class="navbar-nav font-weight-bold mx-auto py-0">
+            {% with url_name=request.resolver_match.url_name %}
+            <a href="{% url 's_home' %}" class="nav-item nav-link {% if url_name == 's_home' %}active{% endif %}">Courses</a>
+            <a href="{% url 's_todo' %}" class="nav-item nav-link {% if url_name == 's_todo' %}active{% endif %}">To do</a>
+            {%endwith%}
+          </div>
+          <li class="nav-item dropdown nav-user">
+            <a class="nav-link nav-user-img" href="" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% if student.photo %}
+      <img src="{{ student.photo.url }}" alt="" class="user-avatar-md rounded-circle">
+    {% else %}
+      <img src="{%static "img/no_img.png"%}" alt="" class="user-avatar-md rounded-circle">
+    {% endif %}
+            </a>
+            
+            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                <div class="nav-user-info">
+                    <h5 class="text-center" >{{student.username }}</h5>
+                    <div style="text-align: center;">
+                    <span class="ml-2" >{{classroom.level}}{{classroom.name}} </span>
+                    <span class="ml-2" > {{classroom.scholar_year}} </span> </div>
+                </div>
+                {% if student.photo == null %}
+              <div class="dropdown-divider" ></div>  
+              <form method="POST" action="{% url 'upload_photo_s' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                  <div class="text-center">
+                  <label for="photo" class="btn btn-sm btn-primary">
+                    <input type="file" name="photo" id="photo" class="form-control-file d-none">
+                    Upload Photo
+                </label></div>
+               {%if s_profile.gender == 'M' %}
+            <div class="text-center">
+              <button type="submit" class="btn btn-sm btn-primary">
+                Become a warrior
+              </button> 
+              <button type="submit" class="btn btn-sm btn-primary ">
+                Become a superhero
+              </button>
+              
+            </div>
+            {%else%}
+            <button type="submit" class="btn btn-sm btn-primary">
+              Become a princess
+            </button>
+            <hr> 
+            <button type="submit" class="btn btn-sm btn-primary">
+              Become a superwoman 
+            </button>
+        {% endif %}
+      </div>
+      </form>
+      {%endif%}
+        <div class="dropdown-divider"></div>
+        <a href="{% url 'logout' %}" class="dropdown-item" style="color: red;text-align: center;">Logout</a>
+            </div>
+        </li>
+          
+        </div>
+      </nav>
+    </div>
+    <!-- Navbar End -->
+    {% block content%}
+    {% endblock content%}
+   
+
+    <!-- Footer Start -->
+    <div
+      class="container-fluid bg-secondary text-white mt-5 py-5 px-sm-3 px-md-5"
+    >
+      <div class="row pt-5">
+        <div class="col-lg-3 col-md-6 mb-5">
+          <a
+            href=""
+            class="navbar-brand font-weight-bold text-primary m-0 mb-4 p-0"
+            style="font-size: 40px; line-height: 40px"
+          >
+          <img src="{% static 'img/logoMind.png' %}" alt="MindLite logo" height="50"width="100">
+            <span class="text-white">MindLite</span>
+          </a>
+          <p>
+            Description de notre plateforme
+          </p>
+          <div class="d-flex justify-content-start mt-4">
+            <a
+              class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+              style="width: 38px; height: 38px"
+              href="#"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a
+              class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+              style="width: 38px; height: 38px"
+              href="#"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a
+              class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+              style="width: 38px; height: 38px"
+              href="#"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a
+              class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+              style="width: 38px; height: 38px"
+              href="#"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+          <h3 class="text-primary mb-4">Get In Touch</h3>
+          <div class="d-flex">
+            <h4 class="fa fa-map-marker-alt text-primary"></h4>
+            <div class="pl-3">
+              <h5 class="text-white">Address</h5>
+              <p>123 Street, New York, USA</p>
+            </div>
+          </div>
+          <div class="d-flex">
+            <h4 class="fa fa-envelope text-primary"></h4>
+            <div class="pl-3">
+              <h5 class="text-white">Email</h5>
+              <p>info@example.com</p>
+            </div>
+          </div>
+          <div class="d-flex">
+            <h4 class="fa fa-phone-alt text-primary"></h4>
+            <div class="pl-3">
+              <h5 class="text-white">Phone</h5>
+              <p>+012 345 67890</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+          <h3 class="text-primary mb-4">Quick Links</h3>
+          <div class="d-flex flex-column justify-content-start">
+            
+            <a class="text-white mb-2" href="{% url 's_home' %}"
+              ><i class="fa fa-angle-right mr-2"></i>Your Courses</a
+            >
+            <a class="text-white mb-2" href="{% url 's_todo' %}"
+              ><i class="fa fa-angle-right mr-2"></i>Your tasks</a
+            >
+
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+          <h3 class="text-primary mb-4">Any request ? Feel free </h3>
+          <form action="">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control border-0 py-4"
+                placeholder="Your Name"
+                required="required"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-control border-0 py-4"
+                placeholder="Your Email"
+                required="required"
+              />
+            </div>
+            <div>
+              <button
+                class="btn btn-primary btn-block border-0 py-3"
+                type="submit"
+              >
+                Submit Now
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div
+        class="container-fluid pt-5"
+        style="border-top: 1px solid rgba(23, 162, 184, 0.2) ;"
+      >
+        <p class="m-0 text-center text-white">
+          &copy;
+          <a class="text-primary font-weight-bold" href="#">MindLite</a>.
+          All Rights Reserved.
+
+          <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+          Designed by
+          <a class="text-primary font-weight-bold" href="https://htmlcodex.com"
+            >HTML Codex</a
+          >
+          <br />Distributed By:
+          <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+        </p>
+      </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary p-3 back-to-top"
+      ><i class="fa fa-angle-double-up"></i
+    ></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

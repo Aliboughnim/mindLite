@@ -1,0 +1,9 @@
+django
+torch
+Pillow
+requests
+diffusers
+sass_processor
+os
+rest_framework
+transformers

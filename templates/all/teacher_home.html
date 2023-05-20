@@ -1,0 +1,48 @@
+{% extends 'base_teacher.html' %}
+{% block content %}
+{%load static%}
+<!-- Team Start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+      <div class="text-center pb-2">
+        <p class="section-title px-5">
+          <span class="px-2">Welcome {{ teacher.username }}</span>
+        </p>
+        <h1 class="mb-4">Meet Your Classrooms</h1>
+      </div>
+      <div class="row">
+        {%for class in classes%}
+        <div class="col-md-6 col-lg-3 text-center team mb-5">
+          <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%">
+            <img class="img-fluid w-100" src="{% if class.name == 'Jedi Masters'%}{% static 'img/jedi.jpg' %}{% elif class.name == 'Math Avengers'  %}{% static 'img/avengers.jpg' %}{%else%}{% static 'img/guards.jpg' %}{% endif %}" alt="" />
+            <div
+              class="team-social d-flex align-items-center justify-content-center w-100 h-100 position-absolute"
+            >
+              <a
+                class="btn btn-outline-light text-center mr-2 px-0"
+                style="width: 38px; height: 38px"
+                href="{% url 't_class' class.id %}"
+                ><i class="fas fa-child"></i
+              ></a>
+              <a
+                class="btn btn-outline-light text-center mr-2 px-0"
+                style="width: 38px; height: 38px"
+                href="{% url 't_courses' class.id %}"
+                ><i class="fas fa-book"></i
+              ></a>
+              <a
+                class="btn btn-outline-light text-center px-0"
+                style="width: 38px; height: 38px"
+                href="{% url 't_problems' class.id %}"
+                ><i class="fas fa-question-circle"></i
+              ></a>
+            </div>
+        </div>
+          <h4>{{class.level}}</h4>
+          <i>{{class.name}}</i>
+        </div>
+    {%endfor%}
+    </div>
+  </div>
+  <!-- Team End -->
+{% endblock content %}  

@@ -1,0 +1,68 @@
+{% extends 'base_teacher.html' %}
+{% block content %}
+{%load static%}
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<link type="text/css" rel="stylesheet" href="{% static 'css/graph.css'%}"/>
+  
+  {%if text != null %}
+  <div class="text-center pb-2">
+    <p class="section-title px-5" >
+      <span class="px-2" id="text">{{text}}</span>
+    </p>
+</div>
+  {% else %}
+  <!-- Problem input Start -->
+  <div class="container-fluid pt-5">
+    <div class="container">
+      <div class="text-center pb-2">
+        <p class="section-title px-5">
+          <span class="px-2">Problem</span>
+        </p>
+        <h1 class="mb-4">Add The Problem Here</h1>
+      </div>
+      <!--<form method="post" action="{% url 'process_input' classroom.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+      </form>-->
+      <form method="get" action="{% url 'process_input' classroom.id %}">
+        <input  type="text" name="input_text" class="form-control"placeholder="Please enter your mathematical problem">
+        <button class="btn btn-primary" id="generateText" style="margin-bottom: 30px;margin-top: 10px;" >Generate Graph</button>
+      </form>
+    {%endif%}
+      <span id="result" style="display: none;">
+        {% if input_text %}
+          {{ input_text }}
+        {% endif %}
+      </span><!--
+        <div  class="control-group">
+          <textarea
+                  class="form-control"
+                  rows="6"
+                  id="mathProblem"
+                  placeholder="Please enter your mathematical problem"
+                ></textarea></div>-->
+                <div  class="control-group" style="display: none;">
+                 <button class="btn btn-primary" id="generateProblem" 
+                 style="margin-bottom: 30px;margin-top: 10px;">Generate Graph</button>
+        </div>
+    </div>
+  </div>
+  <!-- Contact End -->
+
+  
+  <!-- Graph START -->
+  <div class="bg-light p-5">
+    <h2 class="mb-4">Graph Editor</h2>
+      <div class="container-fluid mb-5" id="chart">
+        </div>
+        <a href="{% url 't_problems' classroom.id %}" class="btn btn-secondary btn-primary float-right" ><button class="btn btn-primary" 
+        style="margin-bottom: 10px;margin-top: 10px;">  Submit</button></a> 
+  </div>
+</div>
+
+
+  
+<script type="text/javascript" src="{% static 'js/graph.js'%}"></script>
+{% endblock content %}
+

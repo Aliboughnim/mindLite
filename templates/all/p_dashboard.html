@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+{%load static%}
+
+<div class="container py-5">
+    
+<style>
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .container img {
+        width: 50%;
+        height: auto;
+    }
+</style>
+
+<img src="{% static 'img/xp_evo.PNG' %}" alt="XP Evolution Graph">
+<img src="{% static 'img/xp_per_month.PNG' %}" alt="XP Evolution Graph">
+</div>
+
+
+{% endblock %}
+ 

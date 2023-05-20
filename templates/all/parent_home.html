@@ -1,0 +1,22 @@
+{% extends "base_parent.html" %}
+
+{% block content %}
+{% load static %}
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+</style>
+<div class="container py-5">
+    <img src="data:image/png;base64,{{ image_base64 }}" alt="XP Chart"style="width: 800px; height: auto;">
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base_teacher.html' %}
+{% block content %}
+
+{%load static%}
+<div class="container-fluid pt-5">
+    <div class="container pb-3">
+      <div class="row">
+        {%for stu, stuP,done,correct in students%}
+        <div class="col-lg-4 col-md-4 pb-1">
+          <div class="d-flex flex-column align-items-center bg-light shadow-sm border-top rounded mb-4" style="padding: 10px; position: relative;">
+            
+              {% if stu.photo %}
+              <img src="{{ stu.photo.url }}" alt="Avatar" class="img-fluid h1 font-weight-normal text-primary mb-3">
+              {% else %}
+              <img src="{% static 'img/student_photos/no_img.png' %}" alt="Avatar" class="h1 font-weight-normal text-primary mb-3">
+              {% endif %}
+              <div class="pl-4">
+                <style>
+                  .username {
+                    margin-right: 20px;
+                    
+                  }
+                  .progress-bar-container {
+                    margin-top: 10px; /* Adjust the value as needed */
+                  }
+                  .progress-bar {
+                    background-color: #5F9EA0; /* Set the desired background color */
+                  }
+                  
+                  .progress-label {
+                    color: #FFFFFF; /* Set the desired text color */
+                  }
+                  .btn.btn-primary {
+                    background-color: #96DED1; /* Set the desired background color */
+                   
+                  }
+                </style>
+                <h4 class="text-center">{{ stu.username }}</h4>
+                <hr>
+                <div class="progress-bar-container">
+                  {% with completion_percentage=done|divisibleby:num_probs|yesno:"100,0" %}
+  <div class="progress-bar" data-percentage="{{ completion_percentage }}">
+    <span class="progress-label">{{ done }} / {{ num_probs }} Completed</span>
+  </div>
+  {% endwith %}
+</div>
+{% if done %}
+<div class="progress-bar-container">
+  {% with correctness_percentage=correct|divisibleby:done|yesno:"100,0" %}
+    <div class="progress-bar" data-percentage="{{ correctness_percentage }}">
+      <span class="progress-label">{{ correctness_percentage }}% Success</span>
+    </div>
+  {% endwith %}
+</div>
+{%else%}
+<div class="progress-bar-container"><div class="progress-bar" data-percentage="0">
+  <span class="progress-label">Time to start</span>
+</div></div>
+{%endif%}
+<hr>
+                <a href="{% url 't_chat' stuP.parent_user.id %}" class="btn btn-primary mt-3 py-1 px-2 contact-btn">Contact parent</a>
+              </div>
+            </div>
+          </div>
+          
+        {%endfor%}
+      </div>
+    </div>
+</div>
+
+{%endblock content%}
